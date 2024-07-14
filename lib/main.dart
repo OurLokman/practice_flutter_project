@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -12,39 +11,46 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: SafeArea(
-        child: Scaffold(
-          appBar: AppBar(
-            centerTitle: true,
-            title: Text(
-              'Masonry GridView',
-              style: TextStyle(fontWeight: FontWeight.w500),
-            ),
-            backgroundColor: Colors.yellow[400], // Change the color of the AppBar to yellow
-          ),
-          body: MasonryGridView.builder(
-            gridDelegate: SliverSimpleGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-            ),
-            itemCount: 9, // Number of images
-            itemBuilder: (context, index) {
-              return Padding(
-                padding: const EdgeInsets.all(2.0),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(16.0), // Border radius
-                  child: Image.asset('assets/images/image${index + 1}.jpg'),
+      theme: ThemeData(
+        useMaterial3: true,
+      ),
+      home: MyHomePage(),
+    );
+  }
+}
+
+class MyHomePage extends StatelessWidget {
+  const MyHomePage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: const Text('Alert Dialog'),
+      ),
+      body: Center(
+        child: TextButton(
+          onPressed: () => showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (BuildContext context) => AlertDialog(
+              title: const Text('Subscribe'),
+              content: const Text('Are you sure you want to subscribe to my channel?'),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: const Text('Cancel'),
                 ),
-              );
-            },
+                TextButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: const Text('OK'),
+                ),
+              ],
+              backgroundColor: Colors.yellow[400],
+            ),
           ),
-          floatingActionButton: FloatingActionButton(
-            onPressed: () {
-              // Action to be performed when the button is pressed
-              print('Floating Action Button Pressed');
-            },
-            backgroundColor: Colors.purple[100], // Change the color of the button to yellow
-            child: Icon(Icons.add),
-          ),
+          child: const Text('Youtube subscribe'),
         ),
       ),
     );
